@@ -1,4 +1,4 @@
-.PHONY: install format train eval
+.PHONY: install format train eval update-branch
 
 install:
 	python -m pip install --upgrade pip &&\
@@ -17,3 +17,9 @@ eval:
 	echo '\n## Confusion Matrix Plot' >> report.md
 	if [ -f ./result/model_results.png ]; then echo '![Confusion Matrix](./result/model_results.png)' >> report.md; else echo "Confusion matrix image not found." >> report.md; fi
 	cml comment create report.md
+
+update-branch:
+	git config --global user.name $(USER_NAME)
+	git config --global user.email $(USER_EMAIL)
+	git commit -am "Update with new results"
+	git push --force origin HEAD:update
