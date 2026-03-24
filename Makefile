@@ -2,10 +2,11 @@
 
 install:
 	python -m pip install --upgrade pip &&\
+		python -m pip install black &&\
 		python -m pip install -r requirements.txt
 
 format:
-	black *.py
+	python -m black *.py
 
 train:
 	python train.py
