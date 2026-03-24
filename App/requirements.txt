@@ -1,2 +1,4 @@
+gradio
+joblib
 scikit-learn
 skops
