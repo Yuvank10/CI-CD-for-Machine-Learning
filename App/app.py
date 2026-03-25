@@ -89,6 +89,7 @@ demo = gr.Interface(
     inputs=inputs,
     outputs=outputs,
     examples=examples,
+    cache_examples=False,
     title=title,
     description=description,
     article=article,
