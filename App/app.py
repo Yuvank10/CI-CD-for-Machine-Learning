@@ -36,16 +36,12 @@ for model_path in MODEL_CANDIDATES:
             pipe = joblib_load(model_path)
         break
 
-if pipe is None:
-    raise FileNotFoundError(
-        "Model file not found. Expected one of: ./Model/drug_pipeline.skops, "
-        "./model/drug_pipeline.skops, ./Model/drug_pipeline.joblib, "
-        "./model/drug_pipeline.joblib"
-    )
-
 
 def predict_drug(age, sex, blood_pressure, cholesterol, na_to_k_ratio):
     """Predict drugs based on patient features."""
+    if pipe is None:
+        return "Model is not available yet. Please try again shortly."
+
     features = [age, sex, blood_pressure, cholesterol, na_to_k_ratio]
     predicted_drug = pipe.predict([features])[0]
     return f"Predicted Drug: {predicted_drug}"
