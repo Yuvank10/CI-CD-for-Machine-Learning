@@ -1,4 +1,5 @@
 import gradio as gr
+from joblib import load as joblib_load
 import skops.io as sio
 import warnings
 from pathlib import Path
@@ -22,16 +23,25 @@ trusted_types = [
 MODEL_CANDIDATES = [
     Path("./Model/drug_pipeline.skops"),
     Path("./model/drug_pipeline.skops"),
+    Path("./Model/drug_pipeline.joblib"),
+    Path("./model/drug_pipeline.joblib"),
 ]
 
 pipe = None
 for model_path in MODEL_CANDIDATES:
     if model_path.exists():
-        pipe = sio.load(model_path, trusted=trusted_types)
+        if model_path.suffix == ".skops":
+            pipe = sio.load(model_path, trusted=trusted_types)
+        else:
+            pipe = joblib_load(model_path)
         break
 
 if pipe is None:
-    raise FileNotFoundError("Model file not found in ./Model or ./model")
+    raise FileNotFoundError(
+        "Model file not found. Expected one of: ./Model/drug_pipeline.skops, "
+        "./model/drug_pipeline.skops, ./Model/drug_pipeline.joblib, "
+        "./model/drug_pipeline.joblib"
+    )
 
 
 def predict_drug(age, sex, blood_pressure, cholesterol, na_to_k_ratio):
