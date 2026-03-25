@@ -54,7 +54,7 @@ inputs = [
     gr.Radio(["HIGH", "NORMAL"], label="Cholesterol"),
     gr.Slider(6.2, 38.2, step=0.1, label="Na_to_K"),
 ]
-outputs = [gr.Label(num_top_classes=5)]
+outputs = [gr.Textbox(label="output")]
 
 examples = [
     [30, "M", "HIGH", "NORMAL", 15.4],
@@ -73,7 +73,7 @@ article = (
 )
 
 
-gr.Interface(
+demo = gr.Interface(
     fn=predict_drug,
     inputs=inputs,
     outputs=outputs,
@@ -82,4 +82,6 @@ gr.Interface(
     description=description,
     article=article,
     theme=gr.themes.Soft(),
-).launch()
+)
+
+demo.launch(ssr_mode=False)
