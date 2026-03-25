@@ -34,7 +34,7 @@ hf-login:
 
 push-hub:
 	python train.py
-	hf upload yuvankk/Drug-Classification ./App/app.py app.py --repo-type=space --commit-message="Sync app entry file"
+	hf upload yuvankk/Drug-Classification ./App/drug_app.py drug_app.py --repo-type=space --commit-message="Sync app entry file"
 	hf upload yuvankk/Drug-Classification ./App/README.md README.md --repo-type=space --commit-message="Sync Space metadata"
 	hf upload yuvankk/Drug-Classification ./App/requirements.txt requirements.txt --repo-type=space --commit-message="Sync Space requirements"
 	hf upload yuvankk/Drug-Classification ./model /Model --repo-type=space --commit-message="Sync Model"
