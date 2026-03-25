@@ -28,6 +28,7 @@ update-branch:
 hf-login:
 	git fetch origin update
 	git switch --track -C update origin/update
+	python -m pip install -r requirements.txt
 	python -m pip install -U "huggingface_hub[cli]"
 	hf auth login --token $(HF) --add-to-git-credential
 
