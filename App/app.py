@@ -1,4 +1,5 @@
 import gradio as gr
+import pandas as pd
 from joblib import load as joblib_load
 import skops.io as sio
 import warnings
@@ -42,8 +43,18 @@ def predict_drug(age, sex, blood_pressure, cholesterol, na_to_k_ratio):
     if pipe is None:
         return "Model is not available yet. Please try again shortly."
 
-    features = [age, sex, blood_pressure, cholesterol, na_to_k_ratio]
-    predicted_drug = pipe.predict([features])[0]
+    features_df = pd.DataFrame(
+        [
+            {
+                "Age": age,
+                "Sex": sex,
+                "BP": blood_pressure,
+                "Cholesterol": cholesterol,
+                "Na_to_K": na_to_k_ratio,
+            }
+        ]
+    )
+    predicted_drug = pipe.predict(features_df)[0]
     return f"Predicted Drug: {predicted_drug}"
 
 
