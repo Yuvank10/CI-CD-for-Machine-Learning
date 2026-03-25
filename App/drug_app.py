@@ -2,6 +2,7 @@ import gradio as gr
 import skops.io as sio
 import warnings
 from sklearn.exceptions import InconsistentVersionWarning
+import pandas as pd
 
 # Suppress the version warnings
 warnings.filterwarnings("ignore", category=InconsistentVersionWarning)
@@ -34,8 +35,11 @@ def predict_drug(age, sex, blood_pressure, cholesterol, na_to_k_ratio):
     Returns:
         str: Predicted drug label
     """
-    features = [age, sex, blood_pressure, cholesterol, na_to_k_ratio]
-    predicted_drug = pipe.predict([features])[0]
+    features = pd.DataFrame(
+    [[age, sex, blood_pressure, cholesterol, na_to_k_ratio]],
+    columns=["Age", "Sex", "BP", "Cholesterol", "Na_to_K"]
+    )
+    predicted_drug = pipe.predict(features)[0]
 
     label = f"Predicted Drug: {predicted_drug}"
     return label
