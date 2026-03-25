@@ -2,7 +2,7 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import pandas as pd
-from joblib import dump
+import skops.io as sio
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import ConfusionMatrixDisplay, accuracy_score, f1_score
@@ -59,11 +59,11 @@ def main() -> None:
 	disp.figure_.savefig(result_dir / "model_results.png", dpi=120, bbox_inches="tight")
 	plt.close(disp.figure_)
 
-	dump(pipeline, model_dir / "drug_pipeline.joblib")
+	sio.dump(pipeline, model_dir / "drug_pipeline.skops")
 
 	print(f"Saved metrics: {metrics_path}")
 	print(f"Saved confusion matrix: {result_dir / 'model_results.png'}")
-	print(f"Saved model: {model_dir / 'drug_pipeline.joblib'}")
+	print(f"Saved model: {model_dir / 'drug_pipeline.skops'}")
 
 
 if __name__ == "__main__":
